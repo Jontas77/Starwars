@@ -15,27 +15,22 @@ const PeopleType = new GraphQLObjectType({
     height: { type: GraphQLInt },
     mass: { type: GraphQLInt },
     gender: { type: GraphQLString },
-    homeworld: { type: PlanetType },
-  }),
-});
-
-// Planet Type
-const PlanetType = new GraphQLObjectType({
-  name: "Planets",
-  fields: () => ({
-    name: { type: GraphQLString },
-    climate: { type: GraphQLString },
-    gravity: { type: GraphQLString },
+    homeworld: {
+      type: GraphQLString,
+      resolve: (parent) => {
+        return axios.get(parent.homeworld).then((res) => res.data.name);
+      },
+    },
   }),
 });
 
 // Root query
 const RootQuery = new GraphQLObjectType({
-  name: "PeopleQueryType",
+  name: "RootQueryType",
   fields: {
-    people: {
+    getAllPeople: {
       type: new GraphQLList(PeopleType),
-      resolve(parent, args) {
+      resolve: (parent, args) => {
         return axios
           .get("https://swapi.dev/api/people/")
           .then((res) => res.data.results);
@@ -46,28 +41,9 @@ const RootQuery = new GraphQLObjectType({
       args: {
         id: { type: GraphQLInt },
       },
-      resolve(parent, args) {
+      resolve: (parent, args) => {
         return axios
           .get(`https://swapi.dev/api/people/${args.id}`)
-          .then((res) => res.data);
-      },
-    },
-    planets: {
-      type: new GraphQLList(PlanetType),
-      resolve(parent, args) {
-        return axios
-          .get("https://swapi.dev/api/planets/")
-          .then((res) => res.data.results);
-      },
-    },
-    planet: {
-      type: PlanetType,
-      args: {
-        id: { type: GraphQLInt },
-      },
-      resolve(parent, args) {
-        return axios
-          .get(`https://swapi.dev/api/planets/${args.id}`)
           .then((res) => res.data);
       },
     },
