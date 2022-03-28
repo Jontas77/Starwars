@@ -1,0 +1,14 @@
+{
+  "files": {
+    "main.css": "/static/css/main.b5719171.css",
+    "main.js": "/static/js/main.3d23f3d3.js",
+    "static/media/StarWars_Logo.png": "/static/media/StarWars_Logo.15acf4ca08bb833abab6.png",
+    "index.html": "/index.html",
+    "main.b5719171.css.map": "/static/css/main.b5719171.css.map",
+    "main.3d23f3d3.js.map": "/static/js/main.3d23f3d3.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.b5719171.css",
+    "static/js/main.3d23f3d3.js"
+  ]
+}
